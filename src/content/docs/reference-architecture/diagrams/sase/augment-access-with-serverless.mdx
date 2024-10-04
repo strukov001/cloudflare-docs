@@ -1,0 +1,64 @@
+---
+title: Extend Cloudflare Access capabilities with serverless computing
+pcx_content_type: reference-architecture-diagram
+products:
+  - Access
+  - Workers
+sidebar:
+  order: 1
+  label: Extend Cloudflare Access capabilities with serverless computing
+updated: 2024-10-04
+---
+
+import { RelatedProduct } from "~/components";
+
+## Introduction
+
+Cloudflare Access is a component that enables any organization to safely authenticate and authorize users before they access applications. Additionally, Cloudflare's Workers is a computing engine that forms part of the company's broader developer platform, allowing anyone to execute code directly at the edge.
+
+This document outlines how to combine both solutions to enhance Cloudflare Access capabilities in terms of authorization and authentication.
+
+![Figure 1: Cloudflare Access augmentation with Cloudflare's Workers](~/assets/images/reference-architecture/augment-access-with-serverless/diagram1.svg "Figure 1: Cloudflare Access augmentation with Cloudflare's Workers")
+
+
+## Showcased products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+    Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+</RelatedProduct>
+
+<RelatedProduct header="Access" href="/cloudflare-one/" product="cloudflare-one">
+    Cloudflare Zero Trust replaces legacy security perimeters with Cloudflare's global network, making the Internet faster and safer for teams around the world
+</RelatedProduct>
+
+## Use-cases
+
+- **Custom authorization logic**: Access External evaluation using Workers as a backend (for example, using your own implementation of [Open Policy Agent aka OPA](https://www.openpolicyagent.org/integrations/cloudflare-worker/)])
+- **Augmented JWT**: Origin request augmentation using Cloudflare's own authentication JWT material (for example, adding posture details as part of an incoming request)
+- **Serverless augmented apps protected with Zero-trust**: In that case, Zero-trust is protecting fully serverless or serverless augmented apps
+
+## Getting started
+
+Learn how to enhance the native capabilities of Cloudflare's Zero-trust suite by integrating it with serverless computing. This integration enables organizations to run their own custom business logic, allowing them to tailor authentication and authorization processes to meet almost any requirement.
+
+### 1. Custom authorization process using your own rules
+
+When authorizing users to access an application, Cloudflare Access enables you to utilize various signals generated during the authentication process. If these signals are insufficient, Cloudflare Workers provides a suitable solution for handling authorization outside of Cloudflare Access.
+
+Additionally, Cloudflare Workers is an excellent candidate for decoupling the authentication and authorization processes, allowing for greater flexibility and control.
+
+Learn more: https://developers.cloudflare.com/cloudflare-one/policies/access/external-evaluation/
+
+### 2. Analyze and validate the authentication material (JWT)
+
+When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a JSON Web Token (JWT) as an authentication material when sending requests to the application. This token serves as a valuable asset for expanding custom business logic through secure processing.
+
+Cloudflare's Workers are a great candidate for interacting with incoming JSON Web Tokens (JWTs), enabling additional processing directly within the serverless platform without introducing any added latency.
+
+Learn more: https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/application-token/#user-identity
+
+### 3. Augment the authentication material (JWT) before it reaches the applications
+
+In some situations, it is beneficial to elaborate on this JWT in order to execute additional processing on the protected destination application (for example, adding posture details as part of an incoming request). Cloudflare's Workers are well-suited for this task, seamlessly expanding on the JWT without introducing any added latency.
+
+Learn more: https://developers.cloudflare.com/cloudflare-one/tutorials/extend-sso-with-workers
